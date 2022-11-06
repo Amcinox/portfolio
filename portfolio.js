@@ -278,7 +278,7 @@ export const experience = [
   {
     role: "Full Stack Developer",
     company: "ReMirage",
-    companylogo: "/img/icons/common/wapidu.jpg",
+    companylogo: "/img/icons/common/remirage.png",
     date: "Oct 2022",
     desc: "Worked as a React Native Developer to design and build cross-platform mobile app for AI social media and Created REST APIs using express and Deployed it on AWS based Docker container registry.",
   },
