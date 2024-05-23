@@ -223,10 +223,6 @@ export const SkillBars = [
   },
   {
     Stack: "Backend",
-    progressPercentage: "70",
-  },
-  {
-    Stack: "Programming",
     progressPercentage: "60",
   },
 ];
@@ -253,34 +249,30 @@ export const experience = [
   {
     role: "Frontend Developer",
     company: "Egaliti",
-    companylogo: "/img/icons/common/egaliti.jpg",
+    companylogo: "/img/icons/common/egaliti.png",
     date: `Apr 2022 – ${today}`,
-    desc: "I worked as frontend web developer to build cross-platform Mobile application using React Native and design web based admin dashboards using ReactJs, Mui and some other libraries.",
+    desc: "As a front-end web developer, I developed cross-platform mobile applications using React Native and designed web-based admin dashboards utilizing ReactJs, Mui, and various other libraries.",
   },
   {
     role: "Frontend Developer",
     company: "MatchEdge",
     companylogo: "/img/icons/common/match-edge.png",
     date: `Oct 2022 – ${today}`,
-    desc: "I worked as frontend web developer to design web app using Quasar , Vuejs  and some other libraries.",
-    // descBullets: [
-    // 	"Lorem ipsum dolor sit amet, consdfgectetur adipiscing elit",
-    // 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    // ],
+    desc: "As a front-end web developer, I designed a user-friendly web application for a Football Betting Platform, utilizing Quasar, Vuejs, and various other libraries.",
   },
   {
     role: "Frontend Developer",
     company: "Porthos",
     companylogo: "/img/icons/common/porthos.png",
     date: `Nov 2021 - ${today}`,
-    desc: "I worked as frontend web developer to design Dashboard and web app using Quasar , Vuejs  and some other libraries.",
+    desc: "I developed a platform for Asset and Loan Management that streamlines the management of assets and loans, and provides insightful advice and brokers' selection. The front-end interface was created using Quasar and Vue.js for an intuitive user experience.",
   },
   {
     role: "Full Stack Developer",
     company: "ReMirage",
     companylogo: "/img/icons/common/remirage.png",
     date: "Oct 2022",
-    desc: "Worked as a React Native Developer to design and build cross-platform mobile app for AI social media and Created REST APIs using express and Deployed it on AWS based Docker container registry.",
+    desc: "As a React Native developer, I designed and developed a cross-platform mobile app for AI social media using React Native and Express. I also created REST APIs for app functionality and deployed them on an AWS-based Docker container registry. I collaborated closely with the team to ensure successful delivery, continuously improving my skills and delivering high-quality results.",
   },
 ];
 
