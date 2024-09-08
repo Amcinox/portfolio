@@ -8,12 +8,14 @@ export default function ParticleField() {
     useEffect(() => {
         if (!mountRef.current) return
 
+        const currentMountRef = mountRef.current; // Copy the value of mountRef.current
+
         const scene = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
         const renderer = new THREE.WebGLRenderer({ alpha: true })
 
         renderer.setSize(window.innerWidth, window.innerHeight)
-        mountRef.current.appendChild(renderer.domElement)
+        currentMountRef.appendChild(renderer.domElement)
 
         const geometry = new THREE.BufferGeometry()
         const vertices = []
@@ -52,8 +54,8 @@ export default function ParticleField() {
 
         return () => {
             window.removeEventListener('resize', handleResize)
-            if (mountRef.current) {
-                mountRef.current.removeChild(renderer.domElement)
+            if (currentMountRef) {
+                currentMountRef.removeChild(renderer.domElement)
             }
         }
     }, [])

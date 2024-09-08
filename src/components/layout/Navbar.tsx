@@ -1,13 +1,14 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState('home')
-    const sections = ['home', 'about', 'technologies', 'projects', 'reviews', 'contact']
     const pathname = usePathname()
+
+    const sections = useMemo(() => ['home', 'about', 'technologies', 'projects', 'reviews', 'contact'], [])
 
     const isHomePage = pathname === "/"
 
