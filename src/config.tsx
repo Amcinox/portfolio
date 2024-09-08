@@ -138,7 +138,7 @@ const siteMetadata = {
     siteUrl: contact[ContactType.url],
     siteRepo: 'https://github.com/Amcinox/portfolio',
     siteLogo: '/logo.png',
-    socialBanner: '/images/sns-card.png',
+    socialBanner: '/images/sns-card.JPG',
     locale: 'en-US',
     analytics: {
         googleAnalytics: {

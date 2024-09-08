@@ -2,6 +2,13 @@
   "name": "elbssir-lp",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "MOHAMED EL BSSIR",
+    "email": "contact@elbssir.com",
+    "url": "https://www.elbssir.com",
+    "github": "https://www.github.com/amcinox",
+    "linkedin": "https://www.linkedin.com/in/amcinox/"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
