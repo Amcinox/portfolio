@@ -8,7 +8,7 @@ export const about = {
     name: "Simo Elbssir",
     title: "Full Stack Developer",
     info: "Bridging Morocco and Japan through innovative financial solutions",
-    description: "🇲🇦 Originally from Morocco, now living in the beautiful city of Nara, Japan 🇯🇵. \nI'm a Full Stack Developer with 9 years of experience, specializing in finance and banking projects. Over the years, I've honed my skills in building robust, scalable solutions that drive business success.\mMy unique background allows me to bridge cultural gaps and bring a global perspective to every project I undertake.",
+    description: "🇲🇦 Originally from Morocco, now living in the beautiful city of Nara, Japan 🇯🇵. \nI'm a Full Stack Developer with 9 years of experience, specializing in finance and banking projects. Over the years, I've honed my skills in building robust, scalable solutions that drive business success.\nMy unique background allows me to bridge cultural gaps and bring a global perspective to every project I undertake.",
     avatar: "https://avatars.githubusercontent.com/u/19363749?v=4",
 };
 
