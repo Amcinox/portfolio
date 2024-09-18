@@ -117,8 +117,8 @@ export const contact: Record<ContactType, string> = {
     [ContactType.instagram]: "https://www.instagram.com/volracom",
     [ContactType.facebook]: "https://www.facebook.com/elbssir",
     [ContactType.x]: "https://x.com/amcinox",
-    [ContactType.youtube]: '',
-    [ContactType.email]: 'contact@elbssir.com'
+    [ContactType.youtube]: 'https://www.youtube.com/amcinox',
+    [ContactType.email]: 'mailto:contact@elbssir.com'
 };
 
 

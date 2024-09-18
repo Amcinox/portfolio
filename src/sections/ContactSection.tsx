@@ -23,7 +23,7 @@ export default function ContactSection() {
             <div className="absolute inset-0 z-0">
                 <SakuraParticleField />
             </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex justify-center">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -32,32 +32,55 @@ export default function ContactSection() {
                 >
                     <h2 className="text-3xl font-extrabold sm:text-4xl mb-8">Get in Touch</h2>
                     <p className="text-xl mb-8">I&apos;m always open to new opportunities and collaborations.</p>
-                    <div className="flex justify-center space-x-6">
+                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-6 item-center ">
                         {
                             Object.entries(contact).map(([key, value]) => {
                                 const Icon = Icons[ContactType[key as ContactType]];
                                 if (!Icon) return null;
+
+                                const color = getSocialMediaColor(ContactType[key as ContactType]);
+
                                 return (
-                                    <motion.a
-                                        key={key}
-                                        href={value}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-white hover:text-gray-200 transition-colors duration-300"
-                                        whileHover={{ scale: 1.1, rotate: 5 }}
-                                        whileTap={{ scale: 0.9 }}
-                                    >
-                                        <Icon className="text-4xl" />
-                                    </motion.a>
-                                )
+                                    <div key={key} className="flex justify-center items-center">
+                                        <motion.a
+                                            href={value}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            whileHover={{ scale: 1.4, rotate: 8, color }}
+                                            whileTap={{ scale: 0.9 }}
+                                            className="center items-center self-center"
+                                        >
+                                            <Icon className="text-4xl" />
+                                        </motion.a>
+                                    </div>
+                                );
                             })
                         }
-
                     </div>
                 </motion.div>
             </div>
-
         </section>
-
     )
+}
+
+
+const getSocialMediaColor = (type: ContactType) => {
+    switch (type) {
+        case ContactType.github:
+            return "#6e5494";
+        case ContactType.linkedin:
+            return "#0077b5";
+        case ContactType.email:
+            return "#eab676";
+        case ContactType.instagram:
+            return "#e4405f";
+        case ContactType.youtube:
+            return "#ff0000";
+        case ContactType.facebook:
+            return "#1877f2";
+        case ContactType.url:
+            return "#76b5c5";
+        case ContactType.x:
+            return "#1da1f2";
+    }
 }
