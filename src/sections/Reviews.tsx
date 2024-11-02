@@ -16,9 +16,9 @@ const ReviewCard = ({ name, role, content, avatar }: Review) => (
                 <p className="text-gray-300 italic mb-4 flex-grow">{content}</p>
                 <div className="flex items-center">
 
-                    <Avatar className=" mr-4 ">
+                    <Avatar className="mr-4">
                         <AvatarImage src={avatar} />
-                        <AvatarFallback className="bg-red-600 text-white">  {name.charAt(0)}</AvatarFallback>
+                        <AvatarFallback className="bg-red-600 text-white">{name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>
                         <h3 className="text-lg font-semibold text-white">{name}</h3>

@@ -98,12 +98,12 @@ const projects: Project[] = [
 
 
 const reviews: Review[] = [
-    ...[...Array(10)].map((_, index) => ({
-        name: "John Doe",
-        role: "CEO, Advancia",
-        content: "Simo's expertise in both front-end and back-end technologies has been instrumental in modernizing our banking infrastructure.",
-        avatar: `https://randomuser.me/api/portraits/${index}`
-    }))
+    {
+        name: "LEMMOUCHI Abdelkarim",
+        role: "Director of Neeb",
+        content: "«Mohamed is a developer who masters his subjects well and knows how to explain them simply. \n He always available and he is able to add his touch to the project. \n I highly recommend it. »",
+        avatar: `https://neeb.app/img/icon_logo.svg`
+    }
 
 ]
 
