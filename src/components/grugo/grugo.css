@@ -1,177 +1,377 @@
-.grogu-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 150px;
-  overflow: hidden;
-}
+/* === GROGU (Baby Yoda) from The Mandalorian === */
+/* Star Wars x Japan Enhanced Version */
 
 .grogu-pod {
-  position: absolute;
-  width: 160px;
-  height: 160px;
-  bottom: 20px;
-  left: 0;
-  will-change: transform;
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    bottom: 10px;
+    left: 0;
+    will-change: transform;
+    animation: grogu-hover 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 20px rgba(144, 201, 91, 0.15));
 }
 
 .grogu-pod.right {
-  transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
+/* === Hovering Pod (Mandalorian pram) === */
 .pod {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
 }
 
 .pod-top {
-  position: absolute;
-  width: 140px;
-  height: 70px;
-  background-color: #a0a0a0;
-  border-radius: 70px 70px 0 0;
-  bottom: 30px;
-  left: 10px;
+    position: absolute;
+    width: 150px;
+    height: 75px;
+    background: linear-gradient(180deg, #8a8a8a 0%, #707070 100%);
+    border-radius: 75px 75px 0 0;
+    bottom: 35px;
+    left: 15px;
+    box-shadow:
+        inset 0 -5px 15px rgba(0, 0, 0, 0.3),
+        0 -2px 10px rgba(144, 201, 91, 0.1);
+}
+
+.pod-top::after {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(144, 201, 91, 0.3),
+        transparent
+    );
+    bottom: 5px;
+    left: 10px;
+    border-radius: 2px;
 }
 
 .pod-bottom {
-  position: absolute;
-  width: 160px;
-  height: 60px;
-  background-color: #808080;
-  border-radius: 30px;
-  bottom: 0;
-  left: 0;
+    position: absolute;
+    width: 170px;
+    height: 65px;
+    background: linear-gradient(180deg, #606060 0%, #4a4a4a 100%);
+    border-radius: 35px;
+    bottom: 0;
+    left: 5px;
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.5),
+        0 2px 40px rgba(79, 195, 247, 0.1),
+        inset 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Beskar-style panel lines on the pod */
+.pod-bottom::before {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(176, 184, 196, 0.3),
+        transparent
+    );
+    top: 15px;
+    left: 10%;
+}
+
+.pod-bottom::after {
+    content: "";
+    position: absolute;
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(176, 184, 196, 0.2),
+        transparent
+    );
+    bottom: 15px;
+    left: 20%;
 }
 
 .pod-controls {
-  position: absolute;
-  width: 40px;
-  height: 10px;
-  background-color: #606060;
-  bottom: 40px;
-  left: 60px;
+    position: absolute;
+    width: 50px;
+    height: 12px;
+    background: linear-gradient(180deg, #505050 0%, #3a3a3a 100%);
+    bottom: 45px;
+    left: 65px;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* Control lights */
+.pod-controls::before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #4fc3f7;
+    border-radius: 50%;
+    top: 4px;
+    left: 8px;
+    box-shadow:
+        12px 0 0 #c0392b,
+        24px 0 0 #66bb6a,
+        0 0 6px #4fc3f7;
+    animation: control-blink 2s ease-in-out infinite;
+}
+
+/* Anti-gravity glow under pod */
+.pod::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 30px;
+    right: 30px;
+    height: 8px;
+    background: radial-gradient(
+        ellipse,
+        rgba(79, 195, 247, 0.15) 0%,
+        transparent 70%
+    );
+    filter: blur(4px);
+    animation: antigrav-pulse 2s ease-in-out infinite;
+}
+
+/* === Grogu Character === */
 .grogu {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  bottom: 40px;
-  left: 20px;
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    bottom: 45px;
+    left: 25px;
 }
 
+/* Head - rounder, more baby-like proportions */
 .head {
-  position: relative;
-  width: 80px;
-  height: 70px;
-  background-color: #90c95b;
-  border-radius: 50%;
-  margin: 0 auto;
+    position: relative;
+    width: 90px;
+    height: 80px;
+    background: radial-gradient(
+        ellipse at 40% 40%,
+        #a8d96a 0%,
+        #90c95b 40%,
+        #7ab84a 100%
+    );
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow:
+        inset -5px -5px 15px rgba(0, 0, 0, 0.15),
+        inset 5px 5px 10px rgba(255, 255, 255, 0.1);
 }
 
+/* Wrinkles on forehead */
+.head::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+}
+
+/* Ears - more detailed, droopy Grogu-style */
 .ears {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 60px solid #90c95b;
-  top: -35px;
+    position: absolute;
+    width: 50px;
+    height: 22px;
+    background: linear-gradient(180deg, #a8d96a 0%, #7ab84a 60%, #6aa33a 100%);
+    top: 25px;
+    border-radius: 50%;
+    box-shadow:
+        inset 0 -2px 5px rgba(0, 0, 0, 0.1),
+        inset 0 2px 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Inner ear detail */
+.ears::after {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 12px;
+    background: rgba(168, 140, 100, 0.2);
+    border-radius: 50%;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .left-ear {
-  left: -20px;
-  transform: rotate(-35deg);
+    left: -42px;
+    transform: rotate(-15deg);
 }
 
 .right-ear {
-  right: -20px;
-  transform: rotate(35deg);
+    right: -42px;
+    transform: rotate(15deg);
 }
 
+/* Face area */
 .face {
-  position: relative;
-  top: 25px;
+    position: relative;
+    top: 22px;
 }
 
+/* Eyes - large, dark, expressive Grogu eyes */
 .eyes {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
 }
 
 .eye {
-  width: 20px;
-  height: 20px;
-  background-color: #000;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #1a1a1a 0%, #000 100%);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        inset 0 -2px 4px rgba(255, 255, 255, 0.1),
+        0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Eye shine */
+.eye::before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    top: 4px;
+    left: 5px;
 }
 
 .pupil {
-  width: 6px;
-  height: 6px;
-  background-color: #fff;
-  border-radius: 50%;
-  position: absolute;
-  top: 7px;
-  left: 7px;
-  will-change: transform;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, #fff 0%, #e0e0e0 100%);
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
 }
 
+/* Mouth - cute, small */
 .mouth {
-  width: 16px;
-  height: 8px;
-  border-radius: 0 0 8px 8px;
-  border: 2px solid #000;
-  border-top: none;
-  margin: 5px auto 0;
-  transition: transform 0.6s ease-in-out;
-  transform-origin: center;
+    width: 14px;
+    height: 7px;
+    border-radius: 0 0 8px 8px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-top: none;
+    margin: 6px auto 0;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
 }
+
 .mouth.rotate-180 {
-  transform: rotateX(180deg);
+    transform: rotateX(180deg);
 }
+
+/* Body - Mandalorian robe style */
 .body {
-  position: relative;
-  width: 60px;
-  height: 30px;
-  background-color: #c4a484;
-  border-radius: 30px 30px 0 0;
-  margin: -10px auto 0;
+    position: relative;
+    width: 65px;
+    height: 35px;
+    background: linear-gradient(180deg, #a07850 0%, #8b6914 30%, #785c28 100%);
+    border-radius: 35px 35px 0 0;
+    margin: -12px auto 0;
+    box-shadow:
+        inset -3px 0 8px rgba(0, 0, 0, 0.2),
+        inset 3px 0 8px rgba(255, 255, 255, 0.05);
 }
 
-@keyframes hover {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+/* Robe collar detail */
+.body::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    background: rgba(139, 105, 20, 0.6);
+    border-radius: 0 0 10px 10px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.grogu-pod {
-  animation: hover 2s ease-in-out infinite;
+/* Robe center line */
+.body::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.15);
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-
-.grogu-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 150px;
-  overflow: hidden;
+/* === Animations === */
+@keyframes grogu-hover {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
-.grogu-pod {
-  position: absolute;
-  width: 160px;
-  height: 160px;
-  bottom: 20px;
-  left: 0;
-  will-change: transform;
+@keyframes control-blink {
+    0%,
+    90%,
+    100% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 0.3;
+    }
 }
 
+@keyframes antigrav-pulse {
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.1);
+    }
+}
 
+/* Force power glow effect on hover */
+.grogu-pod:hover .grogu .head {
+    box-shadow:
+        inset -5px -5px 15px rgba(0, 0, 0, 0.15),
+        inset 5px 5px 10px rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(79, 195, 247, 0.3),
+        0 0 40px rgba(79, 195, 247, 0.15);
+    transition: box-shadow 0.5s ease;
+}
+
+.grogu-pod:hover .pod::after {
+    background: radial-gradient(
+        ellipse,
+        rgba(79, 195, 247, 0.3) 0%,
+        transparent 70%
+    );
+}

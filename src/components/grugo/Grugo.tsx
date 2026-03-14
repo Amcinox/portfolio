@@ -1,89 +1,120 @@
 "use client"
 
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import './grugo.css';
-import { cn } from '@/lib/utils';
 
 export default function Grugo() {
-  const [smile, setSmile] = useState(false);
-  const [groguPos, setGroguPos] = useState(0);
-  const [eyePos, setEyePos] = useState({ x: 0, y: 0 });
   const groguRef = useRef<HTMLDivElement>(null);
-  const [movingRight, setMovingRight] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobileRef = useRef(false);
 
-  const moveGrogu = useCallback((e: MouseEvent) => {
-    if (!groguRef.current || isMobile) return;
+  // Store mutable animation state in refs to avoid re-renders
+  const stateRef = useRef({
+    groguPos: 0,
+    targetX: 0,
+    eyeX: 0,
+    eyeY: 0,
+    movingRight: false,
+    smile: false,
+  });
+  const rafRef = useRef<number>(0);
+  const leftPupilRef = useRef<HTMLDivElement>(null);
+  const rightPupilRef = useRef<HTMLDivElement>(null);
+  const mouthRef = useRef<HTMLDivElement>(null);
 
-    const groguRect = groguRef.current.getBoundingClientRect();
-    const groguCenterX = groguRect.left + groguRect.width / 2;
-    const groguCenterY = groguRect.top + groguRect.height / 2;
-    const angle = Math.atan2(e.clientY - groguCenterY, e.clientX - groguCenterX);
+  // Animation loop using requestAnimationFrame — no React re-renders
+  const animate = useCallback(() => {
+    const s = stateRef.current;
+    const el = groguRef.current;
+    if (!el) {
+      rafRef.current = requestAnimationFrame(animate);
+      return;
+    }
 
-    const targetX = e.clientX - groguRect.width / 2;
-    setGroguPos(prev => prev + (targetX - prev) * 0.02);
+    // Smoothly interpolate position
+    s.groguPos += (s.targetX - s.groguPos) * 0.04;
 
-    const eyeMaxMove = 3;
-    setEyePos({
-      x: Math.cos(angle) * eyeMaxMove,
-      y: Math.sin(angle) * eyeMaxMove
-    });
+    // Apply transforms directly to DOM (bypasses React render)
+    el.style.left = `${s.groguPos}px`;
+    el.style.transform = s.movingRight ? 'scaleX(-1)' : 'scaleX(1)';
 
-    setMovingRight(e.clientX > groguCenterX);
-    const isOverLink = (e.target as HTMLElement).closest('a') !== null;
-    setSmile(isOverLink);
-  }, [isMobile]);
+    // Eyes
+    const eyeTransform = `translate(${s.eyeX}px, ${s.eyeY}px)`;
+    if (leftPupilRef.current) leftPupilRef.current.style.transform = eyeTransform;
+    if (rightPupilRef.current) rightPupilRef.current.style.transform = eyeTransform;
 
-  const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth < 640);
+    // Mouth
+    if (mouthRef.current) {
+      mouthRef.current.style.transform = s.smile ? 'rotateX(0deg)' : 'rotateX(180deg)';
+    }
+
+    rafRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  // Mouse handler — just updates ref values, no setState
+  const handleMouse = useCallback((e: MouseEvent) => {
+    const el = groguRef.current;
+    if (!el || isMobileRef.current) return;
+
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+
+    const s = stateRef.current;
+    s.targetX = e.clientX - rect.width / 2;
+    s.eyeX = Math.cos(angle) * 4;
+    s.eyeY = Math.sin(angle) * 4;
+    s.movingRight = e.clientX > cx;
+    s.smile = (e.target as HTMLElement).closest('a') !== null;
   }, []);
 
   useEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    if (!isMobile) {
-      document.addEventListener('mousemove', moveGrogu);
-    }
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('mousemove', moveGrogu);
+    const checkMobile = () => {
+      isMobileRef.current = window.innerWidth < 640;
     };
-  }, [moveGrogu, handleResize, isMobile]);
+    checkMobile();
+
+    window.addEventListener('resize', checkMobile);
+    document.addEventListener('mousemove', handleMouse);
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      document.removeEventListener('mousemove', handleMouse);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleMouse, animate]);
 
   return (
-    <div className="w-full h-24 relative  ">
-      {!isMobile && (
-        <div
-          ref={groguRef}
-          className={cn("grogu-pod ", movingRight ? "right" : "z-2",)}
-          style={{ left: `${groguPos}px` }}
-        >
-          <div className="pod">
-            <div className="pod-top"></div>
-            <div className="pod-bottom"></div>
-            <div className="pod-controls"></div>
-          </div>
-          <div className="grogu">
-            <div className="head">
-              <div className="ears left-ear"></div>
-              <div className="ears right-ear"></div>
-              <div className="face">
-                <div className="eyes rt">
-                  <div className="eye left-eye">
-                    <div className="pupil" style={{ transform: `translate(${eyePos.x}px, ${eyePos.y}px)` }}></div>
-                  </div>
-                  <div className="eye right-eye">
-                    <div className="pupil" style={{ transform: `translate(${eyePos.x}px, ${eyePos.y}px)` }}></div>
-                  </div>
+    <div className="w-full h-28 relative grogu-container-wrapper">
+      <div
+        ref={groguRef}
+        className="grogu-pod"
+      >
+        <div className="pod">
+          <div className="pod-top" />
+          <div className="pod-bottom" />
+          <div className="pod-controls" />
+        </div>
+        <div className="grogu">
+          <div className="head">
+            <div className="ears left-ear" />
+            <div className="ears right-ear" />
+            <div className="face">
+              <div className="eyes">
+                <div className="eye left-eye">
+                  <div className="pupil" ref={leftPupilRef} />
                 </div>
-                <div className={cn("mouth", !smile && "rotate-180")} ></div>
+                <div className="eye right-eye">
+                  <div className="pupil" ref={rightPupilRef} />
+                </div>
               </div>
+              <div className="mouth" ref={mouthRef} />
             </div>
-            <div className="body"></div>
           </div>
-        </div>)}
-
+          <div className="body" />
+        </div>
+      </div>
     </div>
   );
 }

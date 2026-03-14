@@ -58,10 +58,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 overflow-hidden">
-          <Navbar />
-          {children}
-          <Footer />
+        <div className="min-h-screen bg-void text-gray-100 overflow-hidden relative">
+          {/* Subtle background gradient */}
+          <div className="fixed inset-0 bg-star-wars-gradient pointer-events-none" />
+          <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(192,57,43,0.04)_0%,transparent_50%)] pointer-events-none" />
+          <div className="relative z-10">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
         </div>
       </body>
 

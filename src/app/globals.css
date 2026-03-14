@@ -3,27 +3,341 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    /* Star Wars x Japan Theme Colors */
+    --sw-void: #06060f;
+    --sw-deep-space: #0a0a1a;
+    --sw-nebula: #111128;
+    --sw-imperial-red: #c0392b;
+    --sw-crimson: #e74c3c;
+    --sw-sakura: #ffb7c5;
+    --sw-sakura-deep: #ff8fa3;
+    --sw-saber-blue: #4fc3f7;
+    --sw-saber-green: #66bb6a;
+    --sw-gold: #ffd700;
+    --sw-jade: #00b894;
+    --sw-grogu-green: #90c95b;
+    --sw-beskar: #b0b8c4;
+    --sw-mando-blue: #2d5a7b;
+    --sw-text: #e8e6e3;
+    --sw-text-dim: #8a8a9a;
+
+    --foreground-rgb: 232, 230, 227;
+    --background-start-rgb: 6, 6, 15;
+    --background-end-rgb: 10, 10, 26;
+
+    --radius: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--sw-void);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--sw-imperial-red);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sw-crimson);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Selection color */
+::selection {
+    background: rgba(192, 57, 43, 0.4);
+    color: var(--sw-sakura);
 }
 
 @layer base {
-  :root {
-    --radius: 0.5rem;
-  }
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        background: var(--sw-void);
+        color: var(--sw-text);
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+/* === ANIMATIONS === */
+
+@keyframes holographic-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes float-slow {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow:
+            0 0 5px rgba(192, 57, 43, 0.3),
+            0 0 10px rgba(192, 57, 43, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 20px rgba(192, 57, 43, 0.6),
+            0 0 40px rgba(192, 57, 43, 0.2);
+    }
+}
+
+@keyframes saber-glow {
+    0%,
+    100% {
+        text-shadow:
+            0 0 10px rgba(79, 195, 247, 0.5),
+            0 0 20px rgba(79, 195, 247, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 20px rgba(79, 195, 247, 0.8),
+            0 0 40px rgba(79, 195, 247, 0.5),
+            0 0 60px rgba(79, 195, 247, 0.2);
+    }
+}
+
+@keyframes red-saber-glow {
+    0%,
+    100% {
+        text-shadow:
+            0 0 10px rgba(231, 76, 60, 0.5),
+            0 0 20px rgba(231, 76, 60, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 20px rgba(231, 76, 60, 0.8),
+            0 0 40px rgba(231, 76, 60, 0.5),
+            0 0 60px rgba(231, 76, 60, 0.2);
+    }
+}
+
+@keyframes kanji-fade {
+    0%,
+    100% {
+        opacity: 0.03;
+    }
+    50% {
+        opacity: 0.08;
+    }
+}
+
+@keyframes scan-line {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes border-flow {
+    0% {
+        border-image-source: linear-gradient(
+            0deg,
+            var(--sw-imperial-red),
+            var(--sw-saber-blue),
+            var(--sw-imperial-red)
+        );
+    }
+    33% {
+        border-image-source: linear-gradient(
+            120deg,
+            var(--sw-saber-blue),
+            var(--sw-imperial-red),
+            var(--sw-saber-blue)
+        );
+    }
+    66% {
+        border-image-source: linear-gradient(
+            240deg,
+            var(--sw-imperial-red),
+            var(--sw-gold),
+            var(--sw-imperial-red)
+        );
+    }
+    100% {
+        border-image-source: linear-gradient(
+            360deg,
+            var(--sw-imperial-red),
+            var(--sw-saber-blue),
+            var(--sw-imperial-red)
+        );
+    }
+}
+
+/* === REUSABLE CLASSES === */
+
+.holographic-text {
+    background: linear-gradient(
+        90deg,
+        var(--sw-saber-blue),
+        var(--sw-sakura),
+        var(--sw-gold),
+        var(--sw-saber-blue)
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holographic-shimmer 4s linear infinite;
+}
+
+.glass-panel {
+    background: rgba(10, 10, 26, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(192, 57, 43, 0.15);
+}
+
+.glass-panel-light {
+    background: rgba(17, 17, 40, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 183, 197, 0.1);
+}
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--sw-imperial-red),
+        var(--sw-sakura),
+        var(--sw-imperial-red),
+        transparent
+    );
+    opacity: 0.5;
+}
+
+.saber-border-left {
+    border-left: 2px solid var(--sw-imperial-red);
+    box-shadow: -2px 0 10px rgba(192, 57, 43, 0.3);
+}
+
+.saber-border-bottom {
+    border-bottom: 2px solid var(--sw-imperial-red);
+    box-shadow: 0 2px 10px rgba(192, 57, 43, 0.3);
+}
+
+.star-wars-heading {
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.japanese-accent {
+    font-style: italic;
+    color: var(--sw-sakura);
+}
+
+/* Kanji background decoration */
+.kanji-bg::before {
+    content: "侍 武士道 力 光";
+    position: absolute;
+    font-size: 8rem;
+    color: rgba(255, 183, 197, 0.03);
+    font-weight: 900;
+    letter-spacing: 2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    animation: kanji-fade 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+/* Holographic card hover effect */
+.holo-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.holo-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(192, 57, 43, 0.05),
+        transparent,
+        rgba(79, 195, 247, 0.05),
+        transparent
+    );
+    animation: spin 6s linear infinite;
+    pointer-events: none;
+}
+.holo-card:hover {
+    border-color: rgba(192, 57, 43, 0.4);
+    box-shadow:
+        0 0 30px rgba(192, 57, 43, 0.15),
+        inset 0 0 30px rgba(192, 57, 43, 0.05);
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Data stream effect for backgrounds */
+.data-stream::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--sw-saber-blue),
+        transparent
+    );
+    animation: scan-line 4s linear infinite;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* Japanese wave pattern overlay */
+.wave-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23c0392b' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,149.3C672,149,768,171,864,181.3C960,192,1056,192,1152,181.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    pointer-events: none;
 }
