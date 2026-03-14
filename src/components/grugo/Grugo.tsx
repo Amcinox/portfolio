@@ -15,6 +15,10 @@ export default function Grugo() {
     eyeY: 0,
     movingRight: false,
     smile: false,
+    // Touch/drag state
+    dragging: false,
+    dragStartX: 0,
+    dragStartPos: 0,
   });
   const rafRef = useRef<number>(0);
   const leftPupilRef = useRef<HTMLDivElement>(null);
@@ -31,7 +35,16 @@ export default function Grugo() {
     }
 
     // Smoothly interpolate position
-    s.groguPos += (s.targetX - s.groguPos) * 0.04;
+    const lerpSpeed = s.dragging ? 0.15 : 0.04;
+    s.groguPos += (s.targetX - s.groguPos) * lerpSpeed;
+
+    // Clamp to container bounds
+    const container = el.parentElement;
+    if (container) {
+      const maxX = container.clientWidth - el.clientWidth;
+      s.groguPos = Math.max(0, Math.min(s.groguPos, maxX));
+      s.targetX = Math.max(0, Math.min(s.targetX, maxX));
+    }
 
     // Apply transforms directly to DOM (bypasses React render)
     el.style.left = `${s.groguPos}px`;
@@ -68,28 +81,83 @@ export default function Grugo() {
     s.smile = (e.target as HTMLElement).closest('a') !== null;
   }, []);
 
+  // Touch handlers for mobile drag
+  const handleTouchStart = useCallback((e: TouchEvent) => {
+    const el = groguRef.current;
+    if (!el) return;
+    const touch = e.touches[0];
+    const s = stateRef.current;
+    s.dragging = true;
+    s.dragStartX = touch.clientX;
+    s.dragStartPos = s.groguPos;
+    s.smile = true;
+    s.eyeX = 0;
+    s.eyeY = -2;
+  }, []);
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    const s = stateRef.current;
+    if (!s.dragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const dx = touch.clientX - s.dragStartX;
+    s.targetX = s.dragStartPos + dx;
+    s.movingRight = dx > 0;
+    // Eyes look in drag direction
+    s.eyeX = Math.sign(dx) * 4;
+    s.eyeY = -1;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const s = stateRef.current;
+    s.dragging = false;
+    s.smile = false;
+    s.eyeX = 0;
+    s.eyeY = 0;
+  }, []);
+
   useEffect(() => {
     const checkMobile = () => {
       isMobileRef.current = window.innerWidth < 640;
+      // Center Grogu on mobile initially
+      if (isMobileRef.current && groguRef.current?.parentElement) {
+        const container = groguRef.current.parentElement;
+        const center = (container.clientWidth - groguRef.current.clientWidth) / 2;
+        stateRef.current.groguPos = center;
+        stateRef.current.targetX = center;
+      }
     };
     checkMobile();
 
+    const el = groguRef.current;
+
     window.addEventListener('resize', checkMobile);
     document.addEventListener('mousemove', handleMouse);
+    // Touch events on the Grogu element itself
+    if (el) {
+      el.addEventListener('touchstart', handleTouchStart, { passive: false });
+      el.addEventListener('touchmove', handleTouchMove, { passive: false });
+      el.addEventListener('touchend', handleTouchEnd);
+    }
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('resize', checkMobile);
       document.removeEventListener('mousemove', handleMouse);
+      if (el) {
+        el.removeEventListener('touchstart', handleTouchStart);
+        el.removeEventListener('touchmove', handleTouchMove);
+        el.removeEventListener('touchend', handleTouchEnd);
+      }
       cancelAnimationFrame(rafRef.current);
     };
-  }, [handleMouse, animate]);
+  }, [handleMouse, handleTouchStart, handleTouchMove, handleTouchEnd, animate]);
 
   return (
     <div className="w-full h-28 relative grogu-container-wrapper">
       <div
         ref={groguRef}
-        className="grogu-pod"
+        className="grogu-pod touch-none cursor-grab active:cursor-grabbing"
       >
         <div className="pod">
           <div className="pod-top" />
