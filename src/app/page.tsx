@@ -1,8 +1,6 @@
 
 // Layout
-import Navbar from '@/components/layout/Navbar'
 import SectionsContainer from '@/components/layout/SectionsContainer'
-import Footer from '@/components/layout/Footer'
 
 // Sections
 import HeroSection from '@/sections/Hero'
@@ -13,16 +11,8 @@ import ReviewsSection from '@/sections/Reviews'
 import ContactSection from '@/sections/ContactSection'
 
 
-
-
-
-
-
-
 export default function Page() {
   return (
-
-
     <SectionsContainer>
       <HeroSection />
       <AboutSection />
@@ -31,6 +21,5 @@ export default function Page() {
       <ReviewsSection />
       <ContactSection />
     </SectionsContainer>
-
   )
 }

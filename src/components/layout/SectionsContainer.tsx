@@ -1,5 +1,5 @@
 "use client"
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 
 interface SectionsContainerProps {
@@ -7,10 +7,13 @@ interface SectionsContainerProps {
 }
 
 export default function SectionsContainer({ children }: SectionsContainerProps) {
-    const { scrollYProgress } = useScroll()
-    const yRange = useTransform(scrollYProgress, [0, 1], [0, 100])
     return (
-        <motion.main style={{ y: yRange }} >
+        <motion.main
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative"
+        >
             {children}
         </motion.main>
     )
