@@ -24,6 +24,8 @@ export default function Grugo() {
   const leftPupilRef = useRef<HTMLDivElement>(null);
   const rightPupilRef = useRef<HTMLDivElement>(null);
   const mouthRef = useRef<HTMLDivElement>(null);
+  const leftEyeRef = useRef<HTMLDivElement>(null);
+  const rightEyeRef = useRef<HTMLDivElement>(null);
 
   // Animation loop using requestAnimationFrame — no React re-renders
   const animate = useCallback(() => {
@@ -103,7 +105,6 @@ export default function Grugo() {
     const dx = touch.clientX - s.dragStartX;
     s.targetX = s.dragStartPos + dx;
     s.movingRight = dx > 0;
-    // Eyes look in drag direction
     s.eyeX = Math.sign(dx) * 4;
     s.eyeY = -1;
   }, []);
@@ -119,7 +120,6 @@ export default function Grugo() {
   useEffect(() => {
     const checkMobile = () => {
       isMobileRef.current = window.innerWidth < 640;
-      // Center Grogu on mobile initially
       if (isMobileRef.current && groguRef.current?.parentElement) {
         const container = groguRef.current.parentElement;
         const center = (container.clientWidth - groguRef.current.clientWidth) / 2;
@@ -133,13 +133,23 @@ export default function Grugo() {
 
     window.addEventListener('resize', checkMobile);
     document.addEventListener('mousemove', handleMouse);
-    // Touch events on the Grogu element itself
     if (el) {
       el.addEventListener('touchstart', handleTouchStart, { passive: false });
       el.addEventListener('touchmove', handleTouchMove, { passive: false });
       el.addEventListener('touchend', handleTouchEnd);
     }
     rafRef.current = requestAnimationFrame(animate);
+
+    // Periodic blinking
+    const blinkInterval = setInterval(() => {
+      const eyes = [leftEyeRef.current, rightEyeRef.current];
+      eyes.forEach(eye => {
+        if (eye) {
+          eye.classList.add('blinking');
+          setTimeout(() => eye.classList.remove('blinking'), 150);
+        }
+      });
+    }, 3000 + Math.random() * 3000);
 
     return () => {
       window.removeEventListener('resize', checkMobile);
@@ -150,37 +160,72 @@ export default function Grugo() {
         el.removeEventListener('touchend', handleTouchEnd);
       }
       cancelAnimationFrame(rafRef.current);
+      clearInterval(blinkInterval);
     };
   }, [handleMouse, handleTouchStart, handleTouchMove, handleTouchEnd, animate]);
 
   return (
-    <div className="w-full h-28 relative grogu-container-wrapper">
+    <div className="w-full h-32 relative grogu-container-wrapper">
       <div
         ref={groguRef}
         className="grogu-pod touch-none cursor-grab active:cursor-grabbing"
       >
+        {/* Mandalorian Pram */}
         <div className="pod">
-          <div className="pod-top" />
-          <div className="pod-bottom" />
+          <div className="pod-shell" />
+          <div className="pod-base" />
           <div className="pod-controls" />
+          <div className="pod-glow" />
         </div>
+
+        {/* Grogu */}
         <div className="grogu">
+          {/* Head */}
           <div className="head">
-            <div className="ears left-ear" />
-            <div className="ears right-ear" />
+            <div className="head-shape">
+              <div className="forehead-wrinkles" />
+            </div>
+
+            {/* Ears */}
+            <div className="ear ear-left">
+              <div className="ear-outer">
+                <div className="ear-inner" />
+              </div>
+            </div>
+            <div className="ear ear-right">
+              <div className="ear-outer">
+                <div className="ear-inner" />
+              </div>
+            </div>
+
+            {/* Face */}
             <div className="face">
               <div className="eyes">
-                <div className="eye left-eye">
+                <div className="eye left-eye" ref={leftEyeRef}>
+                  <div className="eye-shine" />
                   <div className="pupil" ref={leftPupilRef} />
+                  <div className="eye-ring" />
                 </div>
-                <div className="eye right-eye">
+                <div className="eye right-eye" ref={rightEyeRef}>
+                  <div className="eye-shine" />
                   <div className="pupil" ref={rightPupilRef} />
+                  <div className="eye-ring" />
                 </div>
               </div>
+              <div className="nose" />
               <div className="mouth" ref={mouthRef} />
             </div>
           </div>
-          <div className="body" />
+
+          {/* Body / Robe */}
+          <div className="body">
+            <div className="robe">
+              <div className="robe-collar" />
+              <div className="robe-seam" />
+            </div>
+            <div className="hand hand-left" />
+            <div className="hand hand-right" />
+          </div>
         </div>
       </div>
     </div>
